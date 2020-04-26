@@ -1,0 +1,8 @@
+name: MarkLibTest
+version: 1.0
+main: com.gmail.madivoso.main.MarkLibTestPlugin
+api-version: 1.14
+commands:
+  hello:
+    usage: /<command>
+    description: Test hello command

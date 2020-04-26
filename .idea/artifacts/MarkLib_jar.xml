@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="MarkLib:jar">
+    <output-path>$USER_HOME$/Desktop/Spigot-1.15.2-Server/plugins</output-path>
+    <root id="archive" name="MarkLibTest.jar">
+      <element id="module-output" name="MarkLib" />
+    </root>
+  </artifact>
+</component>
