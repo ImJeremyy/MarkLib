@@ -1,6 +1,6 @@
 package com.gmail.madivoso.example;
 
-import com.gmail.madivoso.lib.Util;
+import com.gmail.madivoso.lib.utility.Util;
 import com.gmail.madivoso.lib.assets.MCommand;
 import org.bukkit.command.CommandSender;
 
