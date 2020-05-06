@@ -65,6 +65,7 @@ public abstract class MDatabase {
 
     public void createStatement(String query) throws SQLException {
         Statement st = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+        System.out.println("Running query: " + query);
         st.execute(query);
     }
 
