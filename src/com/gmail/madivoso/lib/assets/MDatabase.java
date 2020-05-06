@@ -24,14 +24,14 @@ public abstract class MDatabase {
             openConnection();
         }
         if(connectionExists()) {
-            createDatabase();
+            defaultDatabase();
         }
     }
 
     /**
      * Initializes database & tables if not already created.
      */
-    public abstract void createDatabase();
+    public abstract void defaultDatabase();
 
     public String getHost() {
         return host;
@@ -65,10 +65,15 @@ public abstract class MDatabase {
 
     public void createStatement(String query) throws SQLException {
         Statement st = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+        System.out.println("Running query: " + query);
         st.execute(query);
     }
 
-    private void openConnection() {
+    public void closeConnection() throws SQLException {
+        con.close();
+    }
+
+    public void openConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(MySQLUtil.getMySQLURL(host, port, database), username, password);
@@ -77,7 +82,7 @@ public abstract class MDatabase {
         }
     }
 
-    private boolean connectionExists() {
+    public boolean connectionExists() {
         try {
             return con != null && !con.isClosed();
         } catch (SQLException ex) {

@@ -1,13 +1,16 @@
 package com.gmail.madivoso.lib;
 
 import com.gmail.madivoso.lib.assets.MConfig;
+import com.gmail.madivoso.lib.assets.MDatabase;
 import com.gmail.madivoso.lib.managers.CommandManager;
 import com.gmail.madivoso.lib.assets.MCommand;
 import com.gmail.madivoso.lib.managers.ConfigManager;
+import com.gmail.madivoso.lib.managers.DatabaseManager;
 import com.gmail.madivoso.lib.managers.ListenerManager;
 import com.gmail.madivoso.lib.assets.MListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 public abstract class MPlugin extends JavaPlugin {
@@ -15,9 +18,10 @@ public abstract class MPlugin extends JavaPlugin {
     private String name;
     private Logger logger;
 
-    private CommandManager m_cmd;
-    private ListenerManager m_lis;
     private ConfigManager m_config;
+    private DatabaseManager m_database;
+    private ListenerManager m_lis;
+    private CommandManager m_cmd;
 
     public MPlugin(String name) {
         this.name = name;
@@ -25,38 +29,46 @@ public abstract class MPlugin extends JavaPlugin {
     }
 
     public void onEnable() {
-        logger.info(name + " has been enabled!");
+        instantiateAssets();
         initializeManagers();
         registerConfigs();
         registerDatabase();
         registerListeners();
         registerCommands();
         registerAssets();
+        logger.info(name + " has been enabled!");
     }
 
     public void onDisable() {
-        logger.info(name + " has been disabled!");
         pushCache();
+        closeDatabase();
+        logger.info(name + " has been disabled!");
     }
 
-    public abstract void registerCommands();
-
-    public abstract void registerListeners();
+    public abstract void instantiateAssets();
 
     public abstract void registerConfigs();
 
     public abstract void registerDatabase();
 
-    public void addCommand(MCommand cmd) {
-        m_cmd.addCommand(cmd);
+    public abstract void registerListeners();
+
+    public abstract void registerCommands();
+
+    public void addConfig(MConfig config) {
+        m_config.addConfig(config);
+    }
+
+    public void addDatabase(MDatabase database) {
+        m_database.addDatabase(database);
     }
 
     public void addListener(MListener lis) {
         m_lis.addListener(lis);
     }
 
-    public void addConfig(MConfig config) {
-        m_config.addConfig(config);
+    public void addCommand(MCommand cmd) {
+        m_cmd.addCommand(cmd);
     }
 
     private void pushCache() {
@@ -65,10 +77,21 @@ public abstract class MPlugin extends JavaPlugin {
         }
     }
 
+    private void closeDatabase() {
+        try {
+            for (MDatabase db : m_database.getDatabases()) {
+                if(db.connectionExists()) db.closeConnection();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void initializeManagers() {
         m_cmd = new CommandManager();
         m_lis = new ListenerManager();
         m_config = new ConfigManager();
+        m_database = new DatabaseManager();
     }
 
     private void registerAssets() {
