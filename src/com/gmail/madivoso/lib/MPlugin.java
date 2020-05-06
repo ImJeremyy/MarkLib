@@ -28,6 +28,12 @@ public abstract class MPlugin extends JavaPlugin {
         this.logger = getLogger();
     }
 
+    /**
+     * You should call super.onEnable()
+     * whenever in your @Override onEnable() {} code
+     * preferably in the beginning so that all objects
+     * can instantiate
+     */
     public void onEnable() {
         instantiateAssets();
         initializeManagers();
@@ -39,44 +45,103 @@ public abstract class MPlugin extends JavaPlugin {
         logger.info(name + " has been enabled!");
     }
 
+    /**
+     * You should call super.onDisable()
+     * whenever in your @Override onDisable() {} code
+     * preferably in the beginning so that all objects
+     * can instantiate
+     */
     public void onDisable() {
         pushCache();
         closeDatabase();
         logger.info(name + " has been disabled!");
     }
 
+    /**
+     * Where you create objects such as Database.java
+     * or Config.java. See MarkLibTestPlugin#instantiateAssets()
+     * for example.
+     */
     public abstract void instantiateAssets();
 
+    /**
+     * Add configs to the ConfigManager
+     * using super.addConfig()
+     */
     public abstract void registerConfigs();
 
+    /**
+     * Add databases to the DatabaseManager
+     * using super.addDatabase()
+     */
     public abstract void registerDatabase();
 
+    /**
+     * Add listeners to the ListenerManager
+     * using super.addListener()
+     */
     public abstract void registerListeners();
 
+    /**
+     * Add commands to the CommandManager
+     * using super.addCommand()
+     */
     public abstract void registerCommands();
 
+    /**
+     * Add a MConfig to the ConfigManager
+     * for the config to push cache, pull data
+     * and instantiate properly
+     * @param config
+     */
     public void addConfig(MConfig config) {
         m_config.addConfig(config);
     }
 
+    /**
+     * Add a MDatabase to the DatabaseManager
+     * for the database to close its connection
+     * onDisable
+     * @param database
+     */
     public void addDatabase(MDatabase database) {
         m_database.addDatabase(database);
     }
 
+    /**
+     * Add a MListener to the ListenerManager
+     * so that it can register the events to
+     * the PluginManager (through Bukkit)
+     * @param lis
+     */
     public void addListener(MListener lis) {
         m_lis.addListener(lis);
     }
 
+    /**
+     * Add a <Command to the CommandManager
+     * so that it can register
+     * so that the command can work overall
+     * @param cmd
+     */
     public void addCommand(MCommand cmd) {
         m_cmd.addCommand(cmd);
     }
 
+    /**
+     * Pushes the cache of configs
+     * called in #onDisable()
+     */
     private void pushCache() {
         for(MConfig config : m_config.getConfigs()) {
             config.push();
         }
     }
 
+    /**
+     * Closes all database connections
+     * called in #onDisable()
+     */
     private void closeDatabase() {
         try {
             for (MDatabase db : m_database.getDatabases()) {
@@ -87,6 +152,11 @@ public abstract class MPlugin extends JavaPlugin {
         }
     }
 
+    /**
+     * Initializes all managers.
+     * There should only be one instance ever existent of each manager.
+     * Called in #onEnable()
+     */
     private void initializeManagers() {
         m_cmd = new CommandManager();
         m_lis = new ListenerManager();
@@ -94,15 +164,27 @@ public abstract class MPlugin extends JavaPlugin {
         m_database = new DatabaseManager();
     }
 
+    /**
+     * Registers all necessary assets using their managers
+     * Config: will pull cache
+     * Database: will default the database if the connection exists
+     * Listener: will register the event to the PluginManager (bukkit)
+     * Command: will register command so that it can call the method when cmd is executed in game
+     */
     private void registerAssets() {
-        for(MCommand cmd : m_cmd.getCommands()) {
-            getCommand(cmd.getName()).setExecutor(cmd);
+        for(MConfig config : m_config.getConfigs()) {
+            config.pull();
+        }
+        for(MDatabase db : m_database.getDatabases()) {
+            if(db.connectionExists()) {
+                db.defaultDatabase();
+            }
         }
         for(MListener lis : m_lis.getListeners()) {
             getServer().getPluginManager().registerEvents(lis, this);
         }
-        for(MConfig config : m_config.getConfigs()) {
-            config.pull();
+        for(MCommand cmd : m_cmd.getCommands()) {
+            getCommand(cmd.getName()).setExecutor(cmd);
         }
     }
 
