@@ -13,8 +13,13 @@ public class MarkLibTestPlugin extends MPlugin {
 
     @Override
     public void onEnable() {
-        config = new Config(this);
         super.onEnable();
+    }
+
+    @Override
+    public void instantiateAssets() {
+        config = new Config(this);
+        db = new Database(Settings.host, Settings.dbName, Settings.port, Settings.username, Settings.password);
     }
 
     @Override
@@ -34,6 +39,6 @@ public class MarkLibTestPlugin extends MPlugin {
 
     @Override
     public void registerDatabase() {
-        db = new Database(Settings.host, Settings.dbName, Settings.port, Settings.username, Settings.password);
+        super.addDatabase(db);
     }
 }
