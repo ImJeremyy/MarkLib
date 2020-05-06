@@ -28,8 +28,9 @@ public abstract class MPlugin extends JavaPlugin {
         logger.info(name + " has been enabled!");
         initializeManagers();
         registerConfigs();
-        registerCommands();
+        registerDatabase();
         registerListeners();
+        registerCommands();
         registerAssets();
     }
 
@@ -43,6 +44,8 @@ public abstract class MPlugin extends JavaPlugin {
     public abstract void registerListeners();
 
     public abstract void registerConfigs();
+
+    public abstract void registerDatabase();
 
     public void addCommand(MCommand cmd) {
         m_cmd.addCommand(cmd);

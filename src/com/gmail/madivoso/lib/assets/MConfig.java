@@ -18,11 +18,7 @@ public abstract class MConfig {
 
     protected abstract void defaultConfig();
 
-    protected MConfig(File dataFolder, String name) {
-        this(dataFolder.getPath(), name);
-    }
-
-    protected MConfig(String path, String name) {
+    protected MConfig(File path, String name) {
         createFile(path, name);
         defaultConfig();
         pull();
@@ -66,7 +62,10 @@ public abstract class MConfig {
         config.set(path, value);
     }
 
-    private void createFile(String path, String fileName) {
+    private void createFile(File path, String fileName) {
+        if(!path.exists()) {
+            path.mkdir();
+        }
         file = new File(path, fileName + ".yml");
         if(!file.exists()) {
             try {
