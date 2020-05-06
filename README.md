@@ -35,4 +35,11 @@ Created by Jeremy Tubongbanua
 </p>
 
 <h2>Creating Tables and Running Queries</h2>
-<p>Coming soon</p>
+<p>
+<ol>
+<li>Create Database class that extends MDatabase (requires host, dbName, port, user, pass)</li>
+<li>Call super constructore</li>
+<li>Fill defaultDatabase() with code that will check and create blank tables</li>
+<li>Create methods within your class using createStatement(), prepareStatement(), MySQLUtil.getLines(ResultSet)</li>
+</ol>
+</p>
