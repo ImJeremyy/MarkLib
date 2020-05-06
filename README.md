@@ -42,4 +42,23 @@ Created by Jeremy Tubongbanua
 <li>Fill defaultDatabase() with code that will check and create blank tables</li>
 <li>Create methods within your class using createStatement(), prepareStatement(), MySQLUtil.getLines(ResultSet)</li>
 </ol>
+
+<h3>Query examples</h3>
+
+```mysql
+CREATE TABLE `players` (
+	`uuid` VARCHAR(16) NOT NULL PRIMARY KEY, -- unique user id (player.getUniqueId().toString())
+	`name` VARCHAR(16) NOT NULL,
+	`joined_timestamp` TIMESTAMP NOT NULL DEFAULT(CURRENT_TIMESTAMP),
+	`bio` VARCHAR(64) NULL
+	);
+	
+CREATE TABLE `backup` SELECT * FROM `players`;
+DROP TABLE `accounts_backup`;
+DELETE FROM `players` WHERE `name` = 'DimSumPotato';
+UPDATE players SET hello='2' WHERE username='DimSumPotato';
+INSERT INTO `players` (`uuid`, `name`) VALUES ('123-456', 'MarkIsCool');
+```
+<p>
+(Yes I know it doesn't match up but you can figure it out).
 </p>
