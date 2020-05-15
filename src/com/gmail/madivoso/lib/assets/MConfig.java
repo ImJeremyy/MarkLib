@@ -66,6 +66,14 @@ public abstract class MConfig {
     }
 
     /**
+     * Re instantiates the config object according
+     * to what's on the file.
+     */
+    protected void reRead() {
+        config = YamlConfiguration.loadConfiguration(file);
+    }
+
+    /**
      * Sets a value if the path is not found
      * should be called in #defaultConfig()
      */
