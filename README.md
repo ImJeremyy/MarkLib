@@ -62,3 +62,9 @@ INSERT INTO `players` (`uuid`, `name`) VALUES ('123-456', 'MarkIsCool');
 <p>
 (Yes I know it doesn't match up but you can figure it out).
 </p>
+
+<h2>Creating NPCs</h2>
+
+<h2>Packets and stuff</h2>
+
+<h2>GUIs</h2>
