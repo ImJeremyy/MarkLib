@@ -1,13 +1,13 @@
 package lib;
 
-import com.gmail.madivoso.lib.assets.MConfig;
-import com.gmail.madivoso.lib.assets.MDatabase;
-import com.gmail.madivoso.lib.managers.CommandManager;
-import com.gmail.madivoso.lib.assets.MCommand;
-import com.gmail.madivoso.lib.managers.ConfigManager;
-import com.gmail.madivoso.lib.managers.DatabaseManager;
-import com.gmail.madivoso.lib.managers.ListenerManager;
-import com.gmail.madivoso.lib.assets.MListener;
+import lib.assets.MConfig;
+import lib.assets.MDatabase;
+import lib.managers.CommandManager;
+import lib.assets.MCommand;
+import lib.managers.ConfigManager;
+import lib.managers.DatabaseManager;
+import lib.managers.ListenerManager;
+import lib.assets.MListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
@@ -37,11 +37,19 @@ public abstract class MPlugin extends JavaPlugin {
     public void onEnable() {
         instantiateAssets();
         initializeManagers();
+
         registerConfigs();
+        pullConfigs();
+
         registerDatabase();
+        defaultDatabases();
+
         registerListeners();
+        registerEvents();
+
         registerCommands();
-        registerAssets();
+        setCommandsExecutors();
+
         logger.info(name + " has been enabled!");
     }
 
@@ -165,26 +173,44 @@ public abstract class MPlugin extends JavaPlugin {
     }
 
     /**
-     * Registers all necessary assets using their managers
-     * me.markiscool.Config: will pull cache
-     * Database: will default the database if the connection exists
-     * Listener: will register the event to the PluginManager (bukkit)
-     * Command: will register command so that it can call the method when cmd is executed in game
+     * Registers the commands to the plugin itself
+     *
+     *
      */
-    private void registerAssets() {
+    public void setCommandsExecutors() {
+        for(MCommand cmd : m_cmd.getCommands()) {
+            getCommand(cmd.getName()).setExecutor(cmd);
+        }
+    }
+
+    /**
+     * Registers the events to the plugin itself
+     */
+    public void registerEvents() {
+        for(MListener lis : m_lis.getListeners()) {
+            getServer().getPluginManager().registerEvents(lis, this);
+        }
+    }
+
+    /**
+     * Pulls data into cache
+     */
+    private void pullConfigs() {
         for(MConfig config : m_config.getConfigs()) {
             config.pull();
         }
+    }
+
+    /**
+     * Defaults the databases to it's default form
+     * in case tables are missing
+     * #defaultDatabase() should check for tables if they exist and add them
+     */
+    private void defaultDatabases() {
         for(MDatabase db : m_database.getDatabases()) {
             if(db.connectionExists()) {
                 db.defaultDatabase();
             }
-        }
-        for(MListener lis : m_lis.getListeners()) {
-            getServer().getPluginManager().registerEvents(lis, this);
-        }
-        for(MCommand cmd : m_cmd.getCommands()) {
-            getCommand(cmd.getName()).setExecutor(cmd);
         }
     }
 
