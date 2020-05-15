@@ -1,6 +1,6 @@
 package lib.utility;
 
-import com.gmail.madivoso.lib.assets.MDatabase;
+import lib.assets.MDatabase;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -68,7 +68,7 @@ public class MySQLUtil {
      * @throws SQLException don't know why this would be thrown ?
      */
     public static List<String[]> getLines(ResultSet rs) throws SQLException {
-        List<String[]> lines = new ArrayList<>();
+        List<String[]> lines = new ArrayList<String[]>();
         ResultSetMetaData meta = rs.getMetaData();
         int columnsNumber = meta.getColumnCount();
         while(rs.next()) {
