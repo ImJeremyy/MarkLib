@@ -1,4 +1,4 @@
-package com.gmail.madivoso.lib.utility;
+package lib.utility;
 
 import com.gmail.madivoso.lib.assets.MDatabase;
 

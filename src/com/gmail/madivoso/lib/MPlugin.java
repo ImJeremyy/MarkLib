@@ -1,4 +1,4 @@
-package com.gmail.madivoso.lib;
+package lib;
 
 import com.gmail.madivoso.lib.assets.MConfig;
 import com.gmail.madivoso.lib.assets.MDatabase;
@@ -59,7 +59,7 @@ public abstract class MPlugin extends JavaPlugin {
 
     /**
      * Where you create objects such as Database.java
-     * or Config.java. See MarkLibTestPlugin#instantiateAssets()
+     * or me.markiscool.Config.java. See MarkLibTestPlugin#instantiateAssets()
      * for example.
      */
     public abstract void instantiateAssets();
@@ -166,7 +166,7 @@ public abstract class MPlugin extends JavaPlugin {
 
     /**
      * Registers all necessary assets using their managers
-     * Config: will pull cache
+     * me.markiscool.Config: will pull cache
      * Database: will default the database if the connection exists
      * Listener: will register the event to the PluginManager (bukkit)
      * Command: will register command so that it can call the method when cmd is executed in game

@@ -1,4 +1,4 @@
-package com.gmail.madivoso.lib.assets;
+package lib.assets;
 
 import org.bukkit.event.Listener;
 

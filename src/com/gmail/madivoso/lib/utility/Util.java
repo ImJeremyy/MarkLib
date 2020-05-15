@@ -1,4 +1,4 @@
-package com.gmail.madivoso.lib.utility;
+package lib.utility;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;

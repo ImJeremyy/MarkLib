@@ -1,4 +1,4 @@
-package com.gmail.madivoso.lib.assets;
+package lib.assets;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Abstract Config class
+ * Abstract me.markiscool.Config class
  * Extend this class if you're making your own methods
  * to interact with a config.yml file.
  */
@@ -25,6 +25,7 @@ public abstract class MConfig {
     protected MConfig(File path, String name) {
         createFile(path, name);
         defaultConfig();
+        save();
     }
 
     /**
@@ -68,7 +69,7 @@ public abstract class MConfig {
      * Sets a value if the path is not found
      * should be called in #defaultConfig()
      */
-    protected void addDefault(String path, String value) {
+    protected void addDefault(String path, Object value) {
         if(!config.contains(path)) {
             config.set(path, value);
         }

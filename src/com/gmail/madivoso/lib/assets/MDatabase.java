@@ -1,6 +1,6 @@
-package com.gmail.madivoso.lib.assets;
+package lib.assets;
 
-import com.gmail.madivoso.lib.utility.MySQLUtil;
+import lib.utility.MySQLUtil;
 
 import java.sql.*;
 

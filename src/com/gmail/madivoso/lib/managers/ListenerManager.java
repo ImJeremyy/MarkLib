@@ -1,4 +1,4 @@
-package com.gmail.madivoso.lib.managers;
+package lib.managers;
 
 import com.gmail.madivoso.lib.assets.MListener;
 
