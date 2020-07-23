@@ -1,5 +1,6 @@
 package lib.assets;
 
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -137,8 +138,20 @@ public abstract class MConfig {
      * @param path (eg: players.MarkIsCool.nick)
      * @param value (eg: "MarkIsNotCool")
      */
-    protected void set(String path, String value) {
+    protected void set(String path, Object value) {
         config.set(path, value);
+    }
+
+    /**
+     * Creates an empty section
+     * @param path
+     */
+    protected void createSection(String path) {
+        config.createSection(path);
+    }
+
+    protected ConfigurationSection getSection(String path) {
+        return config.getConfigurationSection(path);
     }
 
     /**
