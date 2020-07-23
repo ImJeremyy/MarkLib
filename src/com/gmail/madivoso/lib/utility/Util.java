@@ -32,6 +32,20 @@ public class Util {
     }
 
     /**
+     * Sends the receiver a colourized series of messages (Use & for chat color)
+     * Messages are sent one after another
+     *
+     * Message accompanied with plugin prefix.
+     *
+     * @param receiver - person receiving msg
+     * @param prefix   - prefix of plugin eg: [Ward]
+     * @param text     - msg to send
+     */
+    public static void sendMsg(CommandSender receiver, String prefix, String text) {
+        sendMsg(receiver, prefix + " " + text);
+    }
+
+    /**
      * Colourize a string of text (&)
      *
      * @param text - text to colourize use & for chat color
