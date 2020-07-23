@@ -1,6 +1,6 @@
-package com.gmail.madivoso.lib.managers;
+package lib.managers;
 
-import com.gmail.madivoso.lib.assets.MCommand;
+import lib.assets.MCommand;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
-package com.gmail.madivoso.lib.managers;
+package lib.managers;
 
-import com.gmail.madivoso.lib.assets.MListener;
+import lib.assets.MListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ public class ListenerManager {
     private List<MListener> listeners;
 
     public ListenerManager() {
-        listeners = new ArrayList<>();
+        listeners = new ArrayList<MListener>();
     }
 
     public void addListener(MListener listener) {

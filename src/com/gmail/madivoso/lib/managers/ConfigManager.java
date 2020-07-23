@@ -1,6 +1,6 @@
-package com.gmail.madivoso.lib.managers;
+package lib.managers;
 
-import com.gmail.madivoso.lib.assets.MConfig;
+import lib.assets.MConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ public class ConfigManager {
     private List<MConfig> configs;
 
     public ConfigManager() {
-        configs = new ArrayList<>();
+        configs = new ArrayList<MConfig>();
     }
 
     public void addConfig(MConfig config) {
